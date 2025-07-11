@@ -6,7 +6,11 @@ import {
   countryDropdown,
   countryOption,
   applyFilterButton,
-  overallValue
+  overallValue,
+  Last7Run,
+  Explore,
+  graph,
+  graphHeading
 } from '../support/locators/dashboardLocators.js';
 
 describe('DAP Dashboard', () => {
@@ -97,5 +101,28 @@ describe('DAP Dashboard', () => {
       });
 
   })
+  it('should display 7-day graph when Explore 7 Days is clicked', () => {
+    cy.xpath(regionDropdown).click();
+    cy.xpath(regionOption('AP')).click();
+    cy.xpath(regionOption('JP')).click();
+    cy.xpath(regionOption('EMEA')).click();
+
+    // Country selections
+    cy.xpath(countryDropdown).click();
+    cy.xpath(countryOption('AT')).click();
+    cy.xpath(countryOption('DE')).click();
+    cy.xpath(countryOption('DK')).click();
+
+    // Apply filter
+    cy.xpath(applyFilterButton).click();
+
+    //Last 7 runs
+    cy.xpath(Last7Run).click();
+    cy.xpath(Explore).click();
+    cy.get(graph)
+    .should('be.visible');
+    cy.get(graphHeading).should('be.visible');
+  });
+
 
 })
