@@ -5,8 +5,6 @@ import {
   regionOption,
   countryDropdown,
   countryOption,
-  overallQualityHeading,
-  percentageValue,
   applyFilterButton,
   overallValue
 } from '../support/locators/dashboardLocators.js';
@@ -23,7 +21,7 @@ describe('DAP Dashboard', () => {
   });
 
 
-  it.only('Filter by Region and Country', () => {
+  it('Filter by Region and Country', () => {
     cy.xpath(regionDropdown).click();
     cy.xpath(regionOption('AP')).click();
     cy.xpath(regionOption('JP')).click();
@@ -70,6 +68,34 @@ describe('DAP Dashboard', () => {
             expect(afterValue).to.not.equal(beforeValue, ' After value should differ from Before value');
           });
       });
-    })
-    
+  })
+  it('Remove filter - Region and Country', () => {
+    cy.xpath(regionDropdown).click();
+    cy.xpath(regionOption('AP')).click();
+    cy.xpath(regionOption('JP')).click();
+    cy.xpath(regionOption('EMEA')).click();
+
+    // Country selections
+    cy.xpath(countryDropdown).click();
+    cy.xpath(countryOption('AT')).click();
+    cy.xpath(countryOption('DE')).click();
+    cy.xpath(countryOption('DK')).click();
+
+    //Clear filters using clear button 
+    cy.get('.gap-1 > .clear-button').click();
+    cy.xpath(regionDropdown)
+      .invoke('text')
+      .then((text) => {
+        const trimmed = text.trim();
+        cy.log(`Region dropdown text after clear: "${trimmed}"`);
+
+        // Final assertion
+        expect(
+          trimmed === '' || trimmed === 'Select region',
+          `Dropdown should be empty or show 'Select region', but got "${trimmed}"`
+        ).to.be.true;
+      });
+
+  })
+
 })
