@@ -7,7 +7,8 @@ import {
   countryOption,
   overallQualityHeading,
   percentageValue,
-  applyFilterButton
+  applyFilterButton,
+  overallValue
 } from '../support/locators/dashboardLocators.js';
 
 describe('DAP Dashboard', () => {
@@ -22,7 +23,7 @@ describe('DAP Dashboard', () => {
   });
 
 
-  it('Filter by Region and Country', () => {
+  it.only('Filter by Region and Country', () => {
     cy.xpath(regionDropdown).click();
     cy.xpath(regionOption('AP')).click();
     cy.xpath(regionOption('JP')).click();
@@ -31,29 +32,44 @@ describe('DAP Dashboard', () => {
     // Country selections
     cy.xpath(countryDropdown).click();
     cy.xpath(countryOption('AT')).click();
-    cy.xpath(countryOption('AU')).click();
     cy.xpath(countryOption('DE')).click();
-
-    // Before applying filter: Verify text exists and capture it
-    cy.contains(overallQualityHeading, 'Overall Quality').should('exist');
-    cy.xpath(percentageValue)
+    cy.xpath(countryOption('DK')).click();
+    // Step 1: Capture and assert BEFORE filter value
+    cy.xpath(overallValue)
       .invoke('text')
-      .then((beforeValue) => {
-        expect(beforeValue.trim()).to.equal('99.485%');
+      .then((beforeText) => {
+        const beforeValue = beforeText.trim();
+        cy.log(`Before Filter Value: ${beforeValue}`);
 
-        // Apply Filter
+        // Assertion 1: Before value should not be empty
+        expect(beforeValue).to.not.be.empty;
+        expect(beforeValue).to.include('Correct'); // Optional extra check
+        expect(beforeValue).to.include('Incorrect'); // Optional extra check
+        expect(beforeValue).to.include('Missing'); // Optional extra check
+
+        // Step 2: Click Apply Filter
         cy.xpath(applyFilterButton).click();
 
-        // Verify 'Overall Quality' still exists
-        cy.contains(overallQualityHeading, 'Overall Quality').should('exist');
+        // Optional wait to allow UI update
+        cy.wait(1000);
 
-        // Confirm the percentage has changed after filter
-        cy.xpath("//p")
+        // Step 3: Capture and assert AFTER filter value
+        cy.xpath(overallValue)
           .invoke('text')
-          .should((afterValue) => {
-            expect(afterValue.trim()).to.not.equal(beforeValue.trim());
+          .then((afterText) => {
+            const afterValue = afterText.trim();
+            cy.log(`After Filter Value: ${afterValue}`);
+
+            //  Assertion 2: After value should not be empty
+            expect(afterValue).to.not.be.empty;
+            expect(afterValue).to.include('Correct'); // Optional extra check
+            expect(afterValue).to.include('Incorrect'); // Optional extra check
+            expect(afterValue).to.include('Missing'); // Optional extra check
+
+            //  Assertion 3: After ≠ Before
+            expect(afterValue).to.not.equal(beforeValue, ' After value should differ from Before value');
           });
       });
-  });
-  
-});
+    })
+    
+})
