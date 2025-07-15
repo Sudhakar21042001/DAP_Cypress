@@ -13,7 +13,15 @@ import {
   graphHeading,
   count,
   switchToggle,
-  percentage
+  percentage,
+  datePicker,
+  datePickerStartLabel,
+  datePickerStartDate,
+  datePickerEndLabel,
+  datePickerEndDate,
+  dateLabel,
+  dateStartLabel,
+  dateEndLabel
 } from '../support/locators/dashboardLocators.js';
 
 describe('DAP Dashboard', () => {
@@ -122,7 +130,7 @@ describe('DAP Dashboard', () => {
     //Last 7 runs
     cy.xpath(Last7Run).click();
     cy.xpath(Explore).click();
-    cy.get(percentage).should('have.text','Percentage');
+    cy.get(percentage).should('have.text', 'Percentage');
     cy.get(graphHeading).should('be.visible');
   })
   it('Display 7-day graph and show only count on switch toggle', () => {
@@ -144,8 +152,18 @@ describe('DAP Dashboard', () => {
     //Last 7 runs
     cy.xpath(Last7Run).click();
     cy.xpath(Explore).click();
-    cy.get(switchToggle).click();
+    cy.get(switchToggle).click();  // switch toggle 
     cy.get(count).should('have.text', 'Count');
+
+  })
+  it("Applying date range filter", function () {
+    cy.xpath(datePicker).click();
+    cy.xpath(datePickerStartLabel).click();
+    cy.xpath(datePickerStartDate).click();
+    cy.xpath(datePickerEndLabel).click();
+    cy.xpath(datePickerEndDate).click();
+    cy.get(dateStartLabel).should('have.value', 'Jul 1, 2025');
+    cy.get(dateEndLabel).should('have.value', 'Jul 7, 2025');
 
   })
 });

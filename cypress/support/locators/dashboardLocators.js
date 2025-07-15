@@ -17,3 +17,11 @@ export const graphHeading = ".p-4 > .cursor-pointer";
 
 export const switchToggle = ".ant-switch";
 export const count = ".p-4 > .flex > p";
+
+export const datePicker = "//input[@placeholder='Start date']";
+export const datePickerStartLabel = "//input[@placeholder='Start date']";
+export const datePickerStartDate = "//td[@title='2025-07-01']//div[@class='ant-picker-cell-inner'][normalize-space()='1']";
+export const datePickerEndLabel = "//input[@placeholder='End date']";
+export const datePickerEndDate = "//td[@title='2025-07-07']//div[@class='ant-picker-cell-inner'][normalize-space()='7']"; 
+export const dateStartLabel = "input[placeholder='Start date']";
+export const dateEndLabel = "input[placeholder='End date']";
