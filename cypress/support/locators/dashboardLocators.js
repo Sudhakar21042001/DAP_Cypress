@@ -25,3 +25,6 @@ export const datePickerEndLabel = "//input[@placeholder='End date']";
 export const datePickerEndDate = "//td[@title='2025-07-07']//div[@class='ant-picker-cell-inner'][normalize-space()='7']"; 
 export const dateStartLabel = "input[placeholder='Start date']";
 export const dateEndLabel = "input[placeholder='End date']";
+
+export const datePickerEndDate1 = "//td[@title='2025-07-01']//div[@class='ant-picker-cell-inner'][normalize-space()='1']";
+

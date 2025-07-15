@@ -21,7 +21,8 @@ import {
   datePickerEndDate,
   dateLabel,
   dateStartLabel,
-  dateEndLabel
+  dateEndLabel,
+  datePickerEndDate1
 } from '../support/locators/dashboardLocators.js';
 
 describe('DAP Dashboard', () => {
@@ -156,7 +157,7 @@ describe('DAP Dashboard', () => {
     cy.get(count).should('have.text', 'Count');
 
   })
-  it("Applying date range filter", function () {
+  it("Applying date range filter more than 1 day", function () {
     cy.xpath(datePicker).click();
     cy.xpath(datePickerStartLabel).click();
     cy.xpath(datePickerStartDate).click();
@@ -164,6 +165,15 @@ describe('DAP Dashboard', () => {
     cy.xpath(datePickerEndDate).click();
     cy.get(dateStartLabel).should('have.value', 'Jul 1, 2025');
     cy.get(dateEndLabel).should('have.value', 'Jul 7, 2025');
+ })
+  it.only("Applying date range for single day", function () {
+    cy.xpath(datePicker).click();
+    cy.xpath(datePickerStartLabel).click();
+    cy.xpath(datePickerStartDate).click();
+    cy.xpath(datePickerEndLabel).click();
+    cy.xpath(datePickerEndDate1).click();
+    cy.get(dateStartLabel).should('have.value', 'Jul 1, 2025');
+    cy.get(dateEndLabel).should('have.value', 'Jul 1, 2025');
 
   })
 });
