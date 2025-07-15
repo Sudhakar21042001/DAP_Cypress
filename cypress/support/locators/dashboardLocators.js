@@ -12,5 +12,8 @@ export const overallValue = "//div[@class='flex gap-5 justify-between w-full']";
 
 export const Last7Run = "//span[normalize-space()='Last 7 Runs']";
 export const Explore = "(//span[contains(text(),'Explore')])[1]";
-export const graph = '[style="position: relative; width: 350px; height: 264px; padding: 0px; margin: 0px; border-width: 0px;"] > canvas';
+export const percentage = ".p-4 > .flex > p";
 export const graphHeading = ".p-4 > .cursor-pointer";
+
+export const switchToggle = ".ant-switch";
+export const count = ".p-4 > .flex > p";

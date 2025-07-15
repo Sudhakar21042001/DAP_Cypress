@@ -10,7 +10,10 @@ import {
   Last7Run,
   Explore,
   graph,
-  graphHeading
+  graphHeading,
+  count,
+  switchToggle,
+  percentage
 } from '../support/locators/dashboardLocators.js';
 
 describe('DAP Dashboard', () => {
@@ -119,10 +122,30 @@ describe('DAP Dashboard', () => {
     //Last 7 runs
     cy.xpath(Last7Run).click();
     cy.xpath(Explore).click();
-    cy.get(graph)
-    .should('be.visible');
+    cy.get(percentage).should('have.text','Percentage');
     cy.get(graphHeading).should('be.visible');
-  });
+  })
+  it('Display 7-day graph and show only count on switch toggle', () => {
+    //Region selections 
+    cy.xpath(regionDropdown).click();
+    cy.xpath(regionOption('AP')).click();
+    cy.xpath(regionOption('JP')).click();
+    cy.xpath(regionOption('EMEA')).click();
 
+    // Country selections
+    cy.xpath(countryDropdown).click();
+    cy.xpath(countryOption('AT')).click();
+    cy.xpath(countryOption('DE')).click();
+    cy.xpath(countryOption('DK')).click();
 
-})
+    // Apply filter
+    cy.xpath(applyFilterButton).click();
+
+    //Last 7 runs
+    cy.xpath(Last7Run).click();
+    cy.xpath(Explore).click();
+    cy.get(switchToggle).click();
+    cy.get(count).should('have.text', 'Count');
+
+  })
+});
