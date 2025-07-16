@@ -155,9 +155,8 @@ describe('DAP Dashboard', () => {
     cy.get(dateStartLabel).should('have.value', 'Jul 1, 2025');
     cy.get(dateEndLabel).should('have.value', 'Jul 1, 2025');
   });
-  it.only("should display the By Category section", function () {
-    cy.xpath(Categoryheading('By Category'))
-      .should('be.visible').should('have.text', 'By Category');
+  it("should display the By Category section", function () {
+    cy.xpath(Categoryheading('By Category')).should('be.visible').should('have.text', 'By Category');
     cy.xpath(Categoryheading('Monitors')).should('be.visible').should('have.text', 'Monitors');
     cy.xpath(Categoryheading('Desktops')).should('be.visible').should('have.text', 'Desktops');
     cy.xpath(Categoryheading('Handheld')).should('be.visible').should('have.text', 'Handheld');
@@ -173,7 +172,7 @@ describe('DAP Dashboard', () => {
       .invoke('text')
       .then((text) => {
         const actualText = text.trim();
-        cy.log('Extracted category value:', actualText);
+        cy.log('Extracted category value:', actualText);      
       });
   });
 });
