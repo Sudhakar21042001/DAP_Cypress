@@ -9,7 +9,6 @@ import {
   overallValue,
   Last7Run,
   Explore,
-  graph,
   graphHeading,
   count,
   switchToggle,
@@ -19,12 +18,13 @@ import {
   datePickerStartDate,
   datePickerEndLabel,
   datePickerEndDate,
-  dateLabel,
   dateStartLabel,
   dateEndLabel,
   datePickerEndDate1,
   Categoryheading,
-  CategoryValue
+  CategoryValue,
+  OverallQuality,
+  OverallQualitysubheads
 } from '../support/locators/dashboardLocators.js';
 describe('DAP Dashboard', () => {
   beforeEach(() => {
@@ -88,15 +88,26 @@ describe('DAP Dashboard', () => {
     cy.xpath(countryOption('DK')).click();
     //Clear filters using clear button 
     cy.get('.gap-1 > .clear-button').click();
+    // Check Region dropdown is reset
     cy.xpath(regionDropdown)
       .invoke('text')
-      .then((text) => {
-        const trimmed = text.trim();
-        cy.log(`Region dropdown text after clear: "${trimmed}"`);
-        // Final assertion
+      .then((regionText) => {
+        const trimmedRegion = regionText.trim();
+        cy.log(`Region dropdown text after clear: "${trimmedRegion}"`);
         expect(
-          trimmed === '' || trimmed === 'Select region',
-          `Dropdown should be empty or show 'Select region', but got "${trimmed}"`
+          trimmedRegion === '' || trimmedRegion === 'Select region',
+          `Region dropdown should be empty or show 'Select region', but got "${trimmedRegion}"`
+        ).to.be.true;
+      });
+    // Check Country dropdown is reset
+    cy.xpath(countryDropdown)
+      .invoke('text')
+      .then((countryText) => {
+        const trimmedCountry = countryText.trim();
+        cy.log(`Country dropdown text after clear: "${trimmedCountry}"`);
+        expect(
+          trimmedCountry === '' || trimmedCountry === 'Select country',
+          `Country dropdown should be empty or show 'Select country', but got "${trimmedCountry}"`
         ).to.be.true;
       });
   });
@@ -166,13 +177,33 @@ describe('DAP Dashboard', () => {
     cy.xpath(Categoryheading('Servers')).should('be.visible').should('have.text', 'Servers');
     cy.xpath(Categoryheading('Tablets')).should('be.visible').should('have.text', 'Tablets');
     cy.xpath(Categoryheading('Workstations')).should('be.visible').should('have.text', 'Workstations');
-    const inputValue = '0.57%'; // or any other dynamic value
+    const inputValue = '0.02%'; // or any other dynamic value
     cy.xpath(CategoryValue(inputValue))
       .should('be.visible')
       .invoke('text')
       .then((text) => {
         const actualText = text.trim();
-        cy.log('Extracted category value:', actualText);      
+        cy.log('Extracted category value:', actualText);
       });
   });
+  it("Should diaplay Overall Quality section", function () {
+    cy.xpath(OverallQuality).should('be.visible').should('have.text', 'Overall Quality');
+    cy.xpath(OverallQualitysubheads('Correct')).should('be.visible').should('have.text', 'Correct');
+    cy.xpath(OverallQualitysubheads('Incorrect')).should('be.visible').should('have.text', 'Incorrect');
+    cy.xpath(OverallQualitysubheads('Missing')).should('be.visible').should('have.text', 'Missing');
+  });
+  it('Explore button should be enabled when filter(7 Day or Date Range) is selected', function () {
+    cy.contains('button', 'Explore').should('not.exist');
+    // Click on "7 Day" filter
+    cy.xpath(Last7Run).click();
+    // Now Explore should be visible
+    cy.contains('Explore').should('be.visible');
+    cy.reload();
+    cy.contains('Explore').should('not.exist');
+    //Date Picker
+    cy.xpath(datePicker).click();
+    cy.xpath(datePickerStartDate).click();
+    cy.xpath(datePickerEndDate).click();
+    cy.contains('Explore').should('be.visible');
+  })
 });

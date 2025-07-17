@@ -28,6 +28,8 @@ export const dateEndLabel = "input[placeholder='End date']";
 
 export const datePickerEndDate1 = "//td[@title='2025-07-01']//div[@class='ant-picker-cell-inner'][normalize-space()='1']";
 
-export const Categoryheading = (Category)=> `//div[normalize-space()='${Category}']`
-//p[normalize-space()='99.15%']
-export const CategoryValue= (value)=> `//p[normalize-space()='${value}']`
+export const Categoryheading = (Category)=> `//div[normalize-space()='${Category}']`;
+export const CategoryValue= (value)=> `//p[normalize-space()='${value}']`;
+
+export const OverallQuality = "//div[@class='mb-4']";
+export const OverallQualitysubheads = (overall)=> `//p[normalize-space()='${overall}']`;
