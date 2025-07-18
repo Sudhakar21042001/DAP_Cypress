@@ -24,7 +24,17 @@ import {
   Categoryheading,
   CategoryValue,
   OverallQuality,
-  OverallQualitysubheads
+  OverallQualitysubheads,
+  categorydrop,
+  dropdown1,
+  categorydropmonitor,
+  categorydropdesktops,
+  type,
+  facets,
+  Incorrect,
+  CategoryDownload,
+  CategoryDownloadHistory,
+  CategoryRemoveFilter
 } from '../support/locators/dashboardLocators.js';
 describe('DAP Dashboard', () => {
   beforeEach(() => {
@@ -205,5 +215,27 @@ describe('DAP Dashboard', () => {
     cy.xpath(datePickerStartDate).click();
     cy.xpath(datePickerEndDate).click();
     cy.contains('Explore').should('be.visible');
+  })
+  it.only('Filters, Download & Remove filter - Audit table', function () {
+    //Region selections 
+    cy.xpath(regionDropdown).click();
+    cy.xpath(regionOption('AP')).click();
+    cy.xpath(regionOption('JP')).click();
+    cy.xpath(regionOption('EMEA')).click();
+    // Country selections
+    cy.xpath(countryDropdown).click();
+    cy.xpath(countryOption('AT')).click();
+    cy.xpath(countryOption('DE')).click();
+    cy.xpath(countryOption('DK')).click();
+    // Apply filter
+    cy.xpath(applyFilterButton).click();
+    cy.xpath(dropdown1).click();
+    cy.xpath(categorydropmonitor).click();
+    cy.xpath(categorydropdesktops).click();
+    cy.xpath(type).click();
+    cy.xpath(facets).click();
+    cy.xpath(Incorrect).click();
+   // Remove filter 
+   cy.xpath(CategoryRemoveFilter).click();
   })
 });

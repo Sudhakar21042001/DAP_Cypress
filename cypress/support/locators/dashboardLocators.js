@@ -33,3 +33,15 @@ export const CategoryValue= (value)=> `//p[normalize-space()='${value}']`;
 
 export const OverallQuality = "//div[@class='mb-4']";
 export const OverallQualitysubheads = (overall)=> `//p[normalize-space()='${overall}']`;
+
+export const dropdown1 ="(//div[@class='ant-select-selection-overflow'])[3]";
+
+export const categorydropmonitor ="//div[normalize-space()='monitors']//input[@type='checkbox']";
+export const categorydropdesktops ="//div[normalize-space()='desktops']//label[@class='ant-checkbox-wrapper css-1engpkn']";
+export const type ="//div[@class='ant-select ant-select-outlined css-1engpkn ant-select-single ant-select-allow-clear ant-select-show-arrow']//div[@class='ant-select-selector']";
+export const facets ="//div[@class='ant-select-item-option-content'][normalize-space()='facets']";
+export const Incorrect ="//input[@value='yellow']";
+
+export const CategoryDownload = "//img[@class='w-[30px] h-[30px] bg-[#335985] cursor-pointer p-[5px] rounded-md']";
+export const CategoryRemoveFilter = "//div[@class='flex gap-5 justify-end items-center pr-4']//button[@type='button']//*[name()='svg']";
+export const CategoryDownloadHistory ='[data-row-key="313"] > :nth-child(1)';
