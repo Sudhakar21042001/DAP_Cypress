@@ -45,3 +45,11 @@ export const Incorrect ="//input[@value='yellow']";
 export const CategoryDownload = "//img[@class='w-[30px] h-[30px] bg-[#335985] cursor-pointer p-[5px] rounded-md']";
 export const CategoryRemoveFilter = "//div[@class='flex gap-5 justify-end items-center pr-4']//button[@type='button']//*[name()='svg']";
 export const CategoryDownloadHistory ='[data-row-key="313"] > :nth-child(1)';
+
+export const moreButton = "//span[normalize-space()='More']";
+export const Perpage10 = "//span[@title='10 / page']";
+export const Perpage50 ="//div[contains(text(),'50 / page')]";
+export const Perpage100 = "//span[@title='100 / page']";
+export const Perpage100click ="//div[contains(text(),'100 / page')]";
+export const totalCount ="(//div[@class='font-bold text-[14px]'])[1]";
+export const tableRowCount = "//tbody/tr";

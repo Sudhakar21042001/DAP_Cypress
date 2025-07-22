@@ -34,7 +34,14 @@ import {
   Incorrect,
   CategoryDownload,
   CategoryDownloadHistory,
-  CategoryRemoveFilter
+  CategoryRemoveFilter,
+  moreButton,
+  Perpage10,
+  Perpage100,
+  Perpage100click,
+  totalCount,
+  tableRowCount,
+  Perpage50
 } from '../support/locators/dashboardLocators.js';
 describe('DAP Dashboard', () => {
   beforeEach(() => {
@@ -216,7 +223,7 @@ describe('DAP Dashboard', () => {
     cy.xpath(datePickerEndDate).click();
     cy.contains('Explore').should('be.visible');
   })
-  it.only('Filters, Download & Remove filter - Audit table', function () {
+  it('Filters, Download & Remove filter - Audit table', function () {
     //Region selections 
     cy.xpath(regionDropdown).click();
     cy.xpath(regionOption('AP')).click();
@@ -235,7 +242,25 @@ describe('DAP Dashboard', () => {
     cy.xpath(type).click();
     cy.xpath(facets).click();
     cy.xpath(Incorrect).click();
-   // Remove filter 
-   cy.xpath(CategoryRemoveFilter).click();
-  })
+    // Remove filter 
+    cy.xpath(CategoryRemoveFilter).click();
+  });
+  it('Verify pagination set to 50/100 items per page & Total count in Audit table', function () {
+    cy.xpath(moreButton).click();
+    cy.xpath(Perpage10).click();
+    cy.xpath(Perpage100click).click();
+    cy.xpath(Perpage100).should('have.text', '100 / page');
+    cy.xpath(totalCount)
+      .should('be.visible')
+      .invoke('text')
+      .then((text) => {
+        cy.log('Element text:', text);
+      });
+    cy.xpath(tableRowCount).should('have.length', '100');
+    cy.xpath(Perpage100).click();
+    cy.xpath(Perpage50).click();
+    cy.xpath(tableRowCount).should('have.length', '50');
+
+  });
+
 });
