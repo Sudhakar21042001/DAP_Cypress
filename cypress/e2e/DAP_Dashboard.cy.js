@@ -41,14 +41,20 @@ import {
   Perpage100click,
   totalCount,
   tableRowCount,
-  Perpage50
+  Perpage50,
+  paginationNum,
+  previousButton,
+  nextButton,
+  lastRun,
+  WelcomeBack
 } from '../support/locators/dashboardLocators.js';
 describe('DAP Dashboard', () => {
-  beforeEach(() => {
-    cy.login('user1@lenovo.com', 'l4Qoz;5Rr1Y]1}q+');
-  });
+   beforeEach(() => {
+      cy.login("user1@lenovo.com",'l4Qoz;5Rr1Y]1}q+');
+    });
+  
   it('Login with custom command', () => {
-    cy.url().should('contain', '/dashboard');
+    cy.url().should('contain','/dashboard');
     cy.xpath(avatarIcon).trigger('mouseover');
     cy.get(logoutButton).should('be.visible');
   });
@@ -59,7 +65,7 @@ describe('DAP Dashboard', () => {
     cy.xpath(regionOption('EMEA')).click();
     // Country selections
     cy.xpath(countryDropdown).click();
-    cy.xpath(countryOption('AT')).click();
+    cy.xpath(countryOption('AT')).click({force:true});
     cy.xpath(countryOption('DE')).click();
     cy.xpath(countryOption('DK')).click();
     // Step 1: Capture and assert BEFORE filter value
@@ -260,7 +266,28 @@ describe('DAP Dashboard', () => {
     cy.xpath(Perpage100).click();
     cy.xpath(Perpage50).click();
     cy.xpath(tableRowCount).should('have.length', '50');
-
   });
-
+  it('Verify Previous/Next button is visible and functional in pagination - Audit table', function () {
+    cy.xpath(moreButton).click();
+    cy.xpath(previousButton).should('not.be.enabled');
+    cy.xpath(nextButton).should('be.enabled').click();
+    cy.xpath(previousButton).should('be.enabled');
+    cy.xpath(tableRowCount).should('have.length', '10');
+    cy.xpath(paginationNum('2')).should('have.text', '2');
+    cy.xpath(previousButton).click();
+    cy.xpath(paginationNum('1')).should('have.text', '1');
+    cy.xpath(nextButton).click();
+    cy.xpath(paginationNum('2')).should('have.text', '2');
+    cy.xpath(paginationNum('51255')).click();
+    cy.xpath(nextButton).should('not.enabled');
+  });
+  it("Verify Logout Functionality",function(){
+    cy.xpath(avatarIcon).trigger('mouseover');
+    cy.get(logoutButton).should('be.visible').click();
+    cy.get(WelcomeBack).should('have.text','Welcome back!');
+  });
+  it("Verify that the graph is hidden when the Last Run tab is visible",function(){
+     cy.xpath(lastRun).click();
+     cy.get(graphHeading).should('not.exist');
+      });
 });

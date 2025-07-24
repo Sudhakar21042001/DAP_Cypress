@@ -10,6 +10,7 @@ export const countryOption = (country) => `//div[@class='ant-select-item-option-
 export const applyFilterButton = "//div[@class='flex gap-1']//button[1]";
 export const overallValue = "//div[@class='flex gap-5 justify-between w-full']";
 
+export const lastRun = "//span[normalize-space()='Last Run']";
 export const Last7Run = "//span[normalize-space()='Last 7 Runs']";
 export const Explore = "(//span[contains(text(),'Explore')])[1]";
 export const percentage = ".p-4 > .flex > p";
@@ -52,4 +53,9 @@ export const Perpage50 ="//div[contains(text(),'50 / page')]";
 export const Perpage100 = "//span[@title='100 / page']";
 export const Perpage100click ="//div[contains(text(),'100 / page')]";
 export const totalCount ="(//div[@class='font-bold text-[14px]'])[1]";
-export const tableRowCount = "//tbody/tr";
+export const tableRowCount = "//tbody/tr";  
+
+export const paginationNum = (num) => `//a[normalize-space()='${num}']`;
+export const previousButton = "//li[@title='Previous Page']//button[@type='button']";
+export const nextButton ="//li[@title='Next Page']//button[@type='button']";
+export const WelcomeBack =".next-text-container > h2";
