@@ -11,7 +11,7 @@ describe('DAP - Audit table', function () {
     beforeEach(() => {
         cy.login("user1@lenovo.com", 'l4Qoz;5Rr1Y]1}q+');
         cy.xpath(auditTab).click();
-    });
+    })
     it('Verify search filter functionality using search code', function () {
         cy.get(SearchCode).type("83E10000US");
         cy.get(SearchButton).click();
@@ -33,9 +33,19 @@ describe('DAP - Audit table', function () {
         cy.get(SearchButton).click();
         cy.xpath(SearchCodeList).should('contain', '83E100');
     })
-    it.only('Verify behavior when search code input is empty', function () {
+    it('Verify behavior when search code input is empty', function () {
         cy.get(SearchCode).type(" ");
         cy.get(SearchButton).click();
         cy.xpath(SearchCodeList).should('be.visible');
-    }) 
+    })
+    it('Verify error handling for special characters', function () {
+        cy.get(SearchCode).type("(*&^%$#@#");
+        cy.get(SearchButton).click();
+        cy.xpath(SearchResult).should('have.text', 'No data found.');
+        cy.xpath(SearchResult)
+            .invoke('text')
+            .then((text) => {
+                cy.log('Result : ', text);
+            })
+    })
 })
