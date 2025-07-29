@@ -51,6 +51,7 @@ import {
 describe('DAP Dashboard', () => {
    beforeEach(() => {
       cy.login("user1@lenovo.com",'l4Qoz;5Rr1Y]1}q+');
+      
     });
   
   it('Login with custom command', () => {
