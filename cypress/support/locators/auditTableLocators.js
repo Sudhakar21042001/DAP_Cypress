@@ -4,7 +4,8 @@ export const dateRangeStartSelect = "//td[@title='2025-07-24']//div[@class='ant-
 export const dateRangeEnd ="//input[@placeholder='End date']";
 export const dateRangeEndSelect ="//td[@title='2025-07-25']//div[@class='ant-picker-cell-inner'][normalize-space()='25']"
 
-export const SearchCode = ".ant-input-affix-wrapper";
+export const SearchCode = ".ant-input-affix-wrapper input";
 export const SearchButton = ".ant-input-group-addon > .ant-btn";
 export const SearchCodeList ="//*[@class='ant-table-cell ant-table-cell-fix-left']";
 export const SearchResult ="//div[@class='ant-table-expanded-row-fixed']";
+export const SearchCloseButton ="//span[@class='ant-input-suffix']";

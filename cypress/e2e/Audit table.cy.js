@@ -2,6 +2,7 @@
 import {
     auditTab,
     SearchButton,
+    SearchCloseButton,
     SearchCode,
     SearchCodeList,
     SearchResult
@@ -48,4 +49,24 @@ describe('DAP - Audit table', function () {
                 cy.log('Result : ', text);
             })
     })
+    it('Verify backspace/clear button functionality', function () {
+        // Using Clear button
+        cy.get(SearchCode).type("83E10000US");
+        cy.get(SearchButton).click();
+        cy.xpath(SearchCodeList).should('contain', '83E100');
+        cy.xpath(SearchCloseButton).click();
+        cy.xpath(SearchCodeList).should('contain', '83E10000US');
+        cy.get(SearchCode)
+            .should('be.empty')
+            .and('have.attr', 'placeholder', 'Search by product code');
+        //Using backpace 
+        cy.get(SearchCode).type("83E10000US").type('{backspace}'.repeat(10), { force: true });
+        cy.get(SearchCode)
+            .should('be.empty')
+            .and('have.attr', 'placeholder', 'Search by product code');
+    })
+    it('Pressing Enter triggers search instead of clicking search button', function () {
+        cy.get(SearchCode).type("83E10000US{enter}");
+        cy.xpath(SearchCodeList).should('contain','83E10000US');
+})
 })
